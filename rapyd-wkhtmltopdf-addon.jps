@@ -48,38 +48,28 @@ actions:
         nodeGroup: ${targetNodes.nodeGroup:}
         
   - cmd[${targetNodes.nodeGroup}]: |-
-  
-      if grep -a 'AlmaLinux' /etc/system-release ; then
-    
-      dnf install -y xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 libpng libjpeg openssl icu libX11 libXext libXrender xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi
-      
-      wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox-0.12.6.1-2.almalinux9.x86_64.rpm
 
-      dnf install ./wkhtmltox-0.12.6.1-2.almalinux9.x86_64.rpm -y
+      if grep -a 'AlmaLinux' /etc/system-release ; then
       
+      dnf install -y xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 libpng libjpeg openssl icu libX11 libXext libXrender xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi
+      wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox-0.12.6.1-2.almalinux9.x86_64.rpm
+      dnf install ./wkhtmltox-0.12.6.1-2.almalinux9.x86_64.rpm -y
       rm -f wkhtmltox-0.12.6.1-2.almalinux9.x86_64.rpm
   
       else
       
       yum install fontconfig libXrender libXext xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi freetype libpng zlib libjpeg-turbo -y
-
       wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos7.x86_64.rpm
-
       yum install wkhtmltox-0.12.6-1.centos7.x86_64.rpm -y
-
       rm -f wkhtmltox-0.12.6-1.centos7.x86_64.rpm
         
-  cleanup:
+cleanup:
   - cmd[${targetNodes.nodeGroup}]: |-
       
       if grep -a 'AlmaLinux' /etc/system-release ; then
-    
-        dnf remove wkhtmltox-0.12.6.1-2.almalinux9.x86_64 -y
+          dnf remove wkhtmltox-0.12.6.1-2.almalinux9.x86_64 -y
   
       else
-
-        yum remove wkhtmltox-0.12.6-1.centos7.x86_64 -y
-      
+          yum remove wkhtmltox-0.12.6-1.centos7.x86_64 -y
       fi
-      
-    user: root
+user: root
